@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>November 2026 Prep Calendar</title>
+<style>
+:root{--bg:#faf9f6;--card:#fff;--tx:#1d1d1b;--mu:#6b6a64;--bd:#e4e2da;--ac:#c0502d;--ok:#2f8f5b;--v:#3b6fd4;--lv:#b07d00;--m:#8e44ad;--u:#0f8b8d;--ld:#d35400;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171715;--card:#222220;--tx:#efeee8;--mu:#a09f97;--bd:#383835;--ac:#e8794f;--ok:#4cc083;--v:#6f9bf0;--lv:#e0a92a;--m:#b878d6;--u:#35b9bb;--ld:#f08a4b;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#171715;--card:#222220;--tx:#efeee8;--mu:#a09f97;--bd:#383835;--ac:#e8794f;--ok:#4cc083;--v:#6f9bf0;--lv:#e0a92a;--m:#b878d6;--u:#35b9bb;--ld:#f08a4b;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:1000px;margin:0 auto;padding:18px 14px 40px}
+h1{margin:0;font-size:24px}
+.sub{color:var(--mu);margin:2px 0 14px}
+.top{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:14px}
+.big{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.big b{font-size:22px}
+.bar{height:7px;background:var(--bd);border-radius:5px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ok);width:0}
+.top .bar{height:10px;margin-top:8px}
+.leg{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:10px;font-size:12px;color:var(--mu)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px;vertical-align:-1px}
+.grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.wd{font-size:11px;text-transform:uppercase;color:var(--mu);text-align:center;padding:2px 0}
+.cell{background:var(--card);border:1px solid var(--bd);border-radius:9px;padding:6px;min-height:92px;text-align:left;cursor:pointer;color:var(--tx);font:inherit;display:flex;flex-direction:column;gap:3px}
+.cell:hover{border-color:var(--ac)}
+.cell.sel{border:2px solid var(--ac);padding:5px}
+.cell.today .n{background:var(--ac);color:#fff}
+.cell.full{background:color-mix(in srgb,var(--ok) 14%,var(--card))}
+.n{font-weight:700;font-size:13px;width:22px;height:22px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center}
+.tp{font-size:11px;line-height:1.2;color:var(--mu);overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.tg{display:flex;gap:3px;flex-wrap:wrap;margin-top:auto}
+.tg span{width:8px;height:8px;border-radius:50%}
+.cell small{font-size:10px;color:var(--mu)}
+.c-v{background:var(--v)}.c-l{background:var(--lv)}.c-u{background:var(--u)}.c-m{background:var(--m)}.c-d{background:var(--ld)}
+.det{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-top:14px}
+.det h2{margin:0 0 2px;font-size:18px}
+.det h3{margin:14px 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--mu)}
+.it{display:flex;gap:10px;align-items:flex-start;padding:7px 4px;border-bottom:1px solid var(--bd);cursor:pointer}
+.it:last-child{border-bottom:0}
+.it input{margin-top:3px;width:17px;height:17px;accent-color:var(--ok);flex:none}
+.it.done span{text-decoration:line-through;color:var(--mu)}
+.tag{font-size:10px;border:1px solid var(--bd);border-radius:5px;padding:0 5px;margin-left:6px;color:var(--mu);white-space:nowrap}
+.tag.r{color:var(--ac);border-color:var(--ac)}
+.ct{float:right;font-size:13px;color:var(--mu)}
+@media (max-width:640px){main{padding:12px 8px 30px}.cell{min-height:70px;padding:4px}.cell.sel{padding:3px}.tp{font-size:9px;-webkit-line-clamp:3}h1{font-size:20px}.n{width:19px;height:19px;font-size:11px}}
+</style></head>
+<body><main>
+<h1>November 2026 prep calendar</h1>
+<p class="sub">Tap a day. Tick problems and tasks off; progress saves in this browser.</p>
+<div class="top"><div class="big"><span><b id="pn">0</b> / <span id="pt">0</span> problems</span><span id="dn" style="color:var(--mu)"></span></div>
+<div class="bar"><i id="pb"></i></div>
+<div class="leg"><span><i class="dot c-v"></i>Virtual</span><span><i class="dot c-l"></i>Live contest</span><span><i class="dot c-u"></i>Upsolve</span><span><i class="dot c-m"></i>Mock</span><span><i class="dot c-d"></i>LLD</span></div></div>
+<div class="grid" id="g"></div>
+<div class="det" id="det"></div>
+</main>
+<script>
+const D=[
+["Weekly 8am (if not done)|LLD","Hashing","Ransom Note;Contains Duplicate;Longest Consecutive Sequence;Happy Number†"],
+["Virtual 1","Array","Two Sum;Best Time to Buy and Sell Stock;Majority Element;Product of Array Except Self;Subarray Sum Equals K;Contiguous Array;Insert Interval;Non-overlapping Intervals;Employee Free Time;3Sum;Container With Most Water;Sort Colors;Rotate Array"],
+["Upsolve Virtual 1|LLD","String","Longest Common Prefix†;Longest Palindrome;String to Integer (atoi);Valid Palindrome;Palindrome Pairs†;Encode and Decode Strings†"],
+["Virtual 2","Sorting","First Missing Positive†;Missing Number;Find All Duplicates†;Move Zeroes;Group Anagrams†;Merge k Sorted Lists†"],
+["Upsolve Virtual 2|LLD","Binary Search 1/2","Binary Search;First Bad Version;Find First and Last Position†;Smallest Letter Greater Than Target;Search in Rotated Sorted Array†;Find Minimum in Rotated Sorted Array†;Search a 2D Matrix"],
+["Virtual 3","Binary Search 2/2","Sqrt(x);Kth Smallest in a Sorted Matrix†;Find the Duplicate Number†;Find Peak Element†;Single Element in a Sorted Array†;Median of Two Sorted Arrays†;Maximum Profit in Job Scheduling†"],
+["Upsolve Virtual 3|Mock 1 (DSA baseline), daytime|Biweekly 8pm|LLD","Matrix","Spiral Matrix;Magic Squares In Grid;Valid Sudoku;Rotate Image;Set Matrix Zeroes†"],
+["Weekly 8am|Upsolve biweekly and weekly","Two Pointers","Valid Anagram;Squares of a Sorted Array†;3Sum Closest;Remove Duplicates from Sorted Array†;Longest Palindromic Substring†"],
+["Upsolve leftovers|LLD","Stack 1/2","Valid Parentheses;Longest Valid Parentheses;Evaluate Reverse Polish Notation;Basic Calculator;Basic Calculator II;Decode String"],
+["Virtual 4","Stack 2/2","Next Larger Element (GFG);Daily Temperatures;Largest Rectangle in Histogram;Trapping Rain Water;Asteroid Collision;Backspace String Compare"],
+["Upsolve Virtual 4|LLD","Linked List 1/2","Merge Two Sorted Lists;Reverse Linked List;Swap Nodes in Pairs†;Reverse Nodes in k-Group†;Middle of the Linked List;Linked List Cycle;Linked List Cycle II;Delete the Middle Node†;Remove Nth Node From End†;Intersection of Two Linked Lists†;Palindrome Linked List†"],
+["Virtual 5","Linked List 2/2","Reorder List†;Partition List;Odd Even Linked List;Rotate List;Add Two Numbers†;Add 1 to a Linked List Number (GFG);Sort List†;Copy List with Random Pointer†;Flatten Multilevel Doubly Linked List†;Delete All Occurrences in DLL (GFG)†"],
+["Upsolve Virtual 5|LLD","Recursion and Backtracking","Tower of Hanoi;Generate Parentheses;Letter Combinations of a Phone Number;Subsets;Combination Sum;Permutations;Next Permutation;Sudoku Solver;N-Queens"],
+["Virtual 6","Sliding Window","Longest Substring Without Repeating Characters;Longest Repeating Character Replacement;Minimum Window Substring;Find All Anagrams in a String;Maximum Subarray"],
+["Weekly 8am|Upsolve weekly|Mock 2 (DSA)|LLD","Queue","Sliding Window Maximum"],
+["Virtual 7","Heap","K Closest Points to Origin;Kth Largest Element in an Array;Top K Frequent Words;Find K Closest Elements;Task Scheduler;Smallest Range Covering Elements from K Lists"],
+["Upsolve Virtual 7|LLD","Binary Tree 1/2","Inorder Traversal;Preorder Traversal;Postorder Traversal;Construct Tree from Preorder and Inorder†;Level Order Traversal;Zigzag Level Order;Right Side View;Left View (GFG);Maximum Width of Binary Tree†;Vertical Order (GFG);Vertical Order Traversal LC 987†;Top View†;Bottom View†"],
+["Virtual 8","Binary Tree 2/2","Invert Binary Tree;Same Tree;Symmetric Tree;Subtree of Another Tree;Maximum Depth;Balanced Binary Tree;Diameter of Binary Tree;Path Sum II;Path Sum III;Binary Tree Maximum Path Sum;LCA of a Binary Tree;All Nodes Distance K"],
+["Upsolve Virtual 8|LLD","Binary Search Tree","LCA of a BST;Inorder Successor in BST;Kth Smallest Element in a BST;Validate BST;Convert Sorted Array to BST"],
+["Virtual 9","Design 1/2","Insert Delete GetRandom O(1)†;LRU Cache;Min Stack;Maximum Frequency Stack;Implement Queue using Stacks;Implement Stack using Queues;Design Circular Queue;Design Hit Counter"],
+["Upsolve Virtual 9|Biweekly 8pm|LLD","Greedy (all done, recap)","Largest Number✓;Gas Station✓;Merge Intervals✓;Meeting Rooms✓;Meeting Rooms II✓"],
+["Weekly 8am|Upsolve weekly|Mock 3 (backend fundamentals)","Bit Manipulation","Counting Bits;Number of 1 Bits;Single Number;Reverse Bits;Add Binary"],
+["Upsolve leftovers|LLD","Graph 1/3","Flood Fill;Number of Islands;Pacific Atlantic Water Flow;01 Matrix;Rotting Oranges;Shortest Path to Get Food;Minimum Knight Moves;Word Ladder"],
+["Virtual 10","Graph 2/3","Bus Routes;Clone Graph;Word Search;Word Search II;Topological Sort (GFG);Course Schedule;Course Schedule II;Prerequisite Tasks (GFG)"],
+["Upsolve Virtual 10|LLD (last slot)","Graph 3/3","Alien Dictionary (GFG);Number of Provinces;Connected Components (GFG);Number of Connected Components (LC 323);Accounts Merge;Graph Valid Tree;Cheapest Flights Within K Stops;Longest Increasing Path in a Matrix;Minimum Height Trees"],
+["Virtual 11","Dynamic Programming","Combination Sum IV;Climbing Stairs✓;House Robber✓;Decode Ways✓;Maximum Product Subarray✓;Jump Game✓;Unique Paths✓;Maximal Square✓;Count Square Submatrices✓;Coin Change✓;Subset Sum (GFG)✓;Partition Equal Subset Sum✓;Longest Increasing Subsequence✓"],
+["Upsolve Virtual 11","Misc / Core Algorithms","Quick Sort;Sieve of Eratosthenes;Kadane;Moore Voting;Kruskal;Prim;Dijkstra;Bellman-Ford;Floyd Warshall;Floyd Cycle Detection;Kahn;Kosaraju;Rabin-Karp;KMP;B-Tree;B+ Tree;AVL Tree;Red-Black Tree;Two-Letter Card Game"],
+["Virtual 12","Math","Roman to Integer;Random Pick with Weight;Pow(x, n);Reverse Integer;Palindrome Number;Count Primes"],
+["Weekly 8am|Upsolve weekly|Mock 4 (full simulation)","Trie","Replace Words;Word Search II (Trie version);Word Break"],
+["Virtual 13|Re-attempt every † problem you missed","Design 2/2","Find Median from Data Stream;Implement Trie;Implement Trie II;Map Sum Pairs;Design Add and Search Words;Design In-Memory File System;Time Based Key-Value Store†;Serialize and Deserialize Binary Tree†"]
+];
+const WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+let S={};try{S=JSON.parse(localStorage.getItem("nov26")||"{}")}catch(e){}
+const save=()=>{try{localStorage.setItem("nov26",JSON.stringify(S))}catch(e){}};
+const cls=t=>/^Virtual/.test(t)?"c-v":/^(Weekly|Biweekly)/.test(t)?"c-l":/^Upsolve/.test(t)?"c-u":/^Mock/.test(t)?"c-m":/^LLD/.test(t)?"c-d":"c-u";
+const P=D.map(x=>x[2].split(";")),T=D.map(x=>x[0].split("|"));
+const total=P.reduce((a,b)=>a+b.length,0);
+const now=new Date();let sel=(now.getFullYear()===2026&&now.getMonth()===10)?now.getDate():1;
+const g=document.getElementById("g"),det=document.getElementById("det");
+const done=d=>P[d].filter((_,i)=>S["p"+d+"_"+i]).length;
+function el(t,c,x){const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function render(){
+ g.textContent="";
+ WD.forEach(w=>g.appendChild(el("div","wd",w)));
+ D.forEach((r,d)=>{
+  const n=d+1,k=done(d),b=el("button","cell"+(n===sel?" sel":"")+(now.getFullYear()===2026&&now.getMonth()===10&&now.getDate()===n?" today":"")+(k===P[d].length?" full":""));
+  b.appendChild(el("span","n",n));b.appendChild(el("span","tp",r[1]));
+  const tg=el("div","tg");T[d].forEach(t=>tg.appendChild(el("span",cls(t))));b.appendChild(tg);
+  b.appendChild(el("small","",k+"/"+P[d].length));
+  b.onclick=()=>{sel=n;render();det.scrollIntoView({behavior:"smooth",block:"nearest"})};
+  g.appendChild(b);
+ });
+ let all=0;P.forEach((_,d)=>all+=done(d));
+ document.getElementById("pn").textContent=all;document.getElementById("pt").textContent=total;
+ document.getElementById("pb").style.width=(100*all/total)+"%";
+ document.getElementById("dn").textContent=D.filter((_,d)=>done(d)===P[d].length).length+" of 30 days complete";
+ detail();
+}
+function row(key,text,flag){
+ const l=el("label","it"+(S[key]?" done":"")),c=el("input");c.type="checkbox";c.checked=!!S[key];
+ const s=el("span","",text);
+ if(flag){s.appendChild(el("span","tag"+(flag==="revisit"?" r":""),flag))}
+ c.onchange=()=>{S[key]=c.checked;save();render()};
+ l.appendChild(c);l.appendChild(s);return l;
+}
+function detail(){
+ const d=sel-1;det.textContent="";
+ const wd=WD[(d)%7];
+ const h=el("h2","",wd+", Nov "+sel+" · "+D[d][1]);det.appendChild(h);
+ const ct=el("span","ct",done(d)+" / "+P[d].length);h.appendChild(ct);
+ det.appendChild(el("h3","","Contests and tasks"));
+ T[d].forEach((t,i)=>det.appendChild(row("t"+d+"_"+i,t)));
+ det.appendChild(el("h3","","DSA problems (revisit items first)"));
+ const ps=P[d].map((p,i)=>({p,i,f:p.endsWith("†")?"revisit":p.endsWith("✓")?"recap":""}));
+ ps.sort((a,b)=>(b.f==="revisit")-(a.f==="revisit"));
+ ps.forEach(o=>det.appendChild(row("p"+d+"_"+o.i,o.p.replace(/[†✓]$/,""),o.f)));
+}
+render();
+</script></body></html>
