@@ -34,13 +34,18 @@ h1{margin:0;font-size:24px}
 .c-v{background:var(--v)}.c-l{background:var(--lv)}.c-u{background:var(--u)}.c-m{background:var(--m)}.c-d{background:var(--ld)}
 .det{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-top:14px}
 .det h2{margin:0 0 2px;font-size:18px}
-.det h3{margin:14px 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--mu)}
+.det h3{margin:16px 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--mu)}
+.pat-hdr{font-size:13px;font-weight:700;color:var(--ac);margin:12px 0 4px;padding:4px 6px;background:color-mix(in srgb,var(--ac) 8%,transparent);border-radius:6px;display:flex;align-items:center;gap:6px}
+.pat-hdr i{font-style:normal;font-size:11px;opacity:0.8}
 .it{display:flex;gap:10px;align-items:flex-start;padding:7px 4px;border-bottom:1px solid var(--bd);cursor:pointer}
 .it:last-child{border-bottom:0}
-.it input{margin-top:3px;width:17px;height:17px;accent-color:var(--ok);flex:none}
-.it.done span{text-decoration:line-through;color:var(--mu)}
+.it input{margin-top:3px;width:17px;height:17px;accent-color:var(--ok);flex:none;cursor:pointer}
+.it.done span.text-wrap, .it.done a.link-wrap{text-decoration:line-through;color:var(--mu)}
+.it a.link-wrap{color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:6px;flex:1}
+.it a.link-wrap:hover{color:var(--v);text-decoration:underline}
 .tag{font-size:10px;border:1px solid var(--bd);border-radius:5px;padding:0 5px;margin-left:6px;color:var(--mu);white-space:nowrap}
 .tag.r{color:var(--ac);border-color:var(--ac)}
+.tag.lc{color:var(--v);border-color:var(--v);font-family:monospace}
 .ct{float:right;font-size:13px;color:var(--mu)}
 @media (max-width:640px){main{padding:12px 8px 30px}.cell{min-height:70px;padding:4px}.cell.sel{padding:3px}.tp{font-size:9px;-webkit-line-clamp:3}h1{font-size:20px}.n{width:19px;height:19px;font-size:11px}}
 </style></head>
@@ -86,6 +91,240 @@ const D=[
 ["Weekly 8am|Upsolve weekly|Mock 4 (full simulation)","Trie","Replace Words;Word Search II (Trie version);Word Break"],
 ["Virtual 13|Re-attempt every † problem you missed","Design 2/2","Find Median from Data Stream;Implement Trie;Implement Trie II;Map Sum Pairs;Design Add and Search Words;Design In-Memory File System;Time Based Key-Value Store†;Serialize and Deserialize Binary Tree†"]
 ];
+
+const META={
+"Two Sum":{u:"https://leetcode.com/problems/two-sum/",p:"Hash map",id:"LC 1"},
+"Best Time to Buy and Sell Stock":{u:"https://leetcode.com/problems/best-time-to-buy-and-sell-stock/",p:"One pass / running min-max",id:"LC 121"},
+"Majority Element":{u:"https://leetcode.com/problems/majority-element/",p:"Boyer–Moore majority vote",id:"LC 169"},
+"Product of Array Except Self":{u:"https://leetcode.com/problems/product-of-array-except-self/",p:"Prefix / suffix product",id:"LC 238"},
+"Subarray Sum Equals K":{u:"https://leetcode.com/problems/subarray-sum-equals-k/",p:"Prefix sum + hash map",id:"LC 560"},
+"Contiguous Array":{u:"https://leetcode.com/problems/contiguous-array/",p:"Prefix sum + hash map",id:"LC 525"},
+"Insert Interval":{u:"https://leetcode.com/problems/insert-interval/",p:"Intervals",id:"LC 57"},
+"Non-overlapping Intervals":{u:"https://leetcode.com/problems/non-overlapping-intervals/",p:"Intervals",id:"LC 435"},
+"Employee Free Time":{u:"https://leetcode.com/problems/employee-free-time/",p:"Sweep line / merge interval lists (hard)",id:"LC 759"},
+"3Sum":{u:"https://leetcode.com/problems/3sum/",p:"Sort + converging two pointers",id:"LC 15"},
+"Container With Most Water":{u:"https://leetcode.com/problems/container-with-most-water/",p:"Sort + converging two pointers",id:"LC 11"},
+"Sort Colors":{u:"https://leetcode.com/problems/sort-colors/",p:"Three-way partition (Dutch flag)",id:"LC 75"},
+"Rotate Array":{u:"https://leetcode.com/problems/rotate-array/",p:"In-place rotation / reversal",id:"LC 189"},
+"Spiral Matrix":{u:"https://leetcode.com/problems/spiral-matrix/",p:"Simulation / boundary walk",id:"LC 54"},
+"Magic Squares In Grid":{u:"https://leetcode.com/problems/magic-squares-in-grid/",p:"Fixed-size subgrid + validation",id:"LC 840"},
+"Valid Sudoku":{u:"https://leetcode.com/problems/valid-sudoku/",p:"Hash sets for rows / cols / boxes",id:"LC 36"},
+"Rotate Image":{u:"https://leetcode.com/problems/rotate-image/",p:"In-place matrix transform",id:"LC 48"},
+"Set Matrix Zeroes":{u:"https://leetcode.com/problems/set-matrix-zeroes/",p:"In-place matrix transform",id:"LC 73"},
+"Longest Common Prefix":{u:"https://leetcode.com/problems/longest-common-prefix/",p:"Horizontal / vertical scan",id:"LC 14"},
+"Longest Palindrome":{u:"https://leetcode.com/problems/longest-palindrome/",p:"Frequency count + greedy build",id:"LC 409"},
+"String to Integer (atoi)":{u:"https://leetcode.com/problems/string-to-integer-atoi/",p:"Parsing / overflow handling",id:"LC 8"},
+"Valid Palindrome":{u:"https://leetcode.com/problems/valid-palindrome/",p:"Two pointers palindrome",id:"LC 125"},
+"Palindrome Pairs":{u:"https://leetcode.com/problems/palindrome-pairs/",p:"Advanced pairs (hash / Trie)",id:"LC 336"},
+"Encode and Decode Strings":{u:"https://leetcode.com/problems/encode-and-decode-strings/",p:"Length-prefix encoding",id:"LC 271"},
+"Ransom Note":{u:"https://leetcode.com/problems/ransom-note/",p:"Frequency map / set",id:"LC 383"},
+"Contains Duplicate":{u:"https://leetcode.com/problems/contains-duplicate/",p:"Frequency map / set",id:"LC 217"},
+"Longest Consecutive Sequence":{u:"https://leetcode.com/problems/longest-consecutive-sequence/",p:"Hash set + sequence streak",id:"LC 128"},
+"Happy Number":{u:"https://leetcode.com/problems/happy-number/",p:"Cycle detection in a sequence",id:"LC 202"},
+"First Missing Positive":{u:"https://leetcode.com/problems/first-missing-positive/",p:"Cyclic sort / index marking",id:"LC 41"},
+"Missing Number":{u:"https://leetcode.com/problems/missing-number/",p:"Cyclic sort / index marking",id:"LC 268"},
+"Find All Duplicates":{u:"https://leetcode.com/problems/find-all-duplicates-in-an-array/",p:"Cyclic sort / index marking",id:"LC 442"},
+"Move Zeroes":{u:"https://leetcode.com/problems/move-zeroes/",p:"Two pointers partition",id:"LC 283"},
+"Group Anagrams":{u:"https://leetcode.com/problems/group-anagrams/",p:"Sort / count key + hash grouping",id:"LC 49"},
+"Merge k Sorted Lists":{u:"https://leetcode.com/problems/merge-k-sorted-lists/",p:"Merge K sorted",id:"LC 23"},
+"Valid Anagram":{u:"https://leetcode.com/problems/valid-anagram/",p:"Frequency / count array",id:"LC 242"},
+"Squares of a Sorted Array":{u:"https://leetcode.com/problems/squares-of-a-sorted-array/",p:"Converging pointers from both ends",id:"LC 977"},
+"3Sum Closest":{u:"https://leetcode.com/problems/3sum-closest/",p:"Converging pointers from both ends",id:"LC 16"},
+"Remove Duplicates from Sorted Array":{u:"https://leetcode.com/problems/remove-duplicates-from-sorted-array/",p:"Slow / fast read-write pointers",id:"LC 26"},
+"Longest Palindromic Substring":{u:"https://leetcode.com/problems/longest-palindromic-substring/",p:"Expand around center",id:"LC 5"},
+"Binary Search":{u:"https://leetcode.com/problems/binary-search/",p:"Classic template",id:"LC 704"},
+"First Bad Version":{u:"https://leetcode.com/problems/first-bad-version/",p:"Lower / upper bound (first true)",id:"LC 278"},
+"Find First and Last Position":{u:"https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/",p:"Lower / upper bound (first true)",id:"LC 34"},
+"Smallest Letter Greater Than Target":{u:"https://leetcode.com/problems/find-smallest-letter-greater-than-target/",p:"Lower / upper bound (first true)",id:"LC 744"},
+"Search in Rotated Sorted Array":{u:"https://leetcode.com/problems/search-in-rotated-sorted-array/",p:"Rotated sorted array",id:"LC 33"},
+"Find Minimum in Rotated Sorted Array":{u:"https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/",p:"Rotated sorted array",id:"LC 153"},
+"Search a 2D Matrix":{u:"https://leetcode.com/problems/search-a-2d-matrix/",p:"2D matrix as 1D sorted",id:"LC 74"},
+"Sqrt(x)":{u:"https://leetcode.com/problems/sqrtx/",p:"Binary search on answer / value range",id:"LC 69"},
+"Kth Smallest in a Sorted Matrix":{u:"https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/",p:"Binary search on answer / value range",id:"LC 378"},
+"Find the Duplicate Number":{u:"https://leetcode.com/problems/find-the-duplicate-number/",p:"Binary search on answer / value range",id:"LC 287"},
+"Find Peak Element":{u:"https://leetcode.com/problems/find-peak-element/",p:"Binary search on a local property",id:"LC 162"},
+"Single Element in a Sorted Array":{u:"https://leetcode.com/problems/single-element-in-a-sorted-array/",p:"Binary search on a local property",id:"LC 540"},
+"Median of Two Sorted Arrays":{u:"https://leetcode.com/problems/median-of-two-sorted-arrays/",p:"Partition binary search (hard)",id:"LC 4"},
+"Maximum Profit in Job Scheduling":{u:"https://leetcode.com/problems/maximum-profit-in-job-scheduling/",p:"Design / DP + binary search",id:"LC 1235"},
+"Valid Parentheses":{u:"https://leetcode.com/problems/valid-parentheses/",p:"Parentheses matching",id:"LC 20"},
+"Longest Valid Parentheses":{u:"https://leetcode.com/problems/longest-valid-parentheses/",p:"Parentheses matching",id:"LC 32"},
+"Evaluate Reverse Polish Notation":{u:"https://leetcode.com/problems/evaluate-reverse-polish-notation/",p:"Expression evaluation",id:"LC 150"},
+"Basic Calculator":{u:"https://leetcode.com/problems/basic-calculator/",p:"Expression evaluation",id:"LC 224"},
+"Basic Calculator II":{u:"https://leetcode.com/problems/basic-calculator-ii/",p:"Expression evaluation",id:"LC 227"},
+"Decode String":{u:"https://leetcode.com/problems/decode-string/",p:"Nested string decode",id:"LC 394"},
+"Next Larger Element (GFG)":{u:"https://www.google.com/search?q=geeksforgeeks+next+larger+element",p:"Monotonic stack: next greater / smaller",id:"GFG"},
+"Daily Temperatures":{u:"https://leetcode.com/problems/daily-temperatures/",p:"Monotonic stack: next greater / smaller",id:"LC 739"},
+"Largest Rectangle in Histogram":{u:"https://leetcode.com/problems/largest-rectangle-in-histogram/",p:"Monotonic stack: area / histogram",id:"LC 84"},
+"Trapping Rain Water":{u:"https://leetcode.com/problems/trapping-rain-water/",p:"Monotonic stack: area / histogram",id:"LC 42"},
+"Asteroid Collision":{u:"https://leetcode.com/problems/asteroid-collision/",p:"Stack simulation",id:"LC 735"},
+"Backspace String Compare":{u:"https://leetcode.com/problems/backspace-string-compare/",p:"Stack simulation",id:"LC 844"},
+"Sliding Window Maximum":{u:"https://leetcode.com/problems/sliding-window-maximum/",p:"Monotonic deque (sliding window max)",id:"LC 239"},
+"Merge Two Sorted Lists":{u:"https://leetcode.com/problems/merge-two-sorted-lists/",p:"Dummy node + merge",id:"LC 21"},
+"Reverse Linked List":{u:"https://leetcode.com/problems/reverse-linked-list/",p:"In-place reversal",id:"LC 206"},
+"Swap Nodes in Pairs":{u:"https://leetcode.com/problems/swap-nodes-in-pairs/",p:"In-place reversal",id:"LC 24"},
+"Reverse Nodes in k-Group":{u:"https://leetcode.com/problems/reverse-nodes-in-k-group/",p:"In-place reversal",id:"LC 25"},
+"Middle of the Linked List":{u:"https://leetcode.com/problems/middle-of-the-linked-list/",p:"Fast & slow pointers",id:"LC 876"},
+"Linked List Cycle":{u:"https://leetcode.com/problems/linked-list-cycle/",p:"Fast & slow pointers",id:"LC 141"},
+"Linked List Cycle II":{u:"https://leetcode.com/problems/linked-list-cycle-ii/",p:"Fast & slow pointers",id:"LC 142"},
+"Delete the Middle Node":{u:"https://leetcode.com/problems/delete-the-middle-node-of-a-linked-list/",p:"Fast & slow pointers",id:"LC 2095"},
+"Remove Nth Node From End":{u:"https://leetcode.com/problems/remove-nth-node-from-end-of-list/",p:"Two-pointer gap / length equalizing",id:"LC 19"},
+"Intersection of Two Linked Lists":{u:"https://leetcode.com/problems/intersection-of-two-linked-lists/",p:"Two-pointer gap / length equalizing",id:"LC 160"},
+"Palindrome Linked List":{u:"https://leetcode.com/problems/palindrome-linked-list/",p:"Middle + reverse + merge / compare",id:"LC 234"},
+"Reorder List":{u:"https://leetcode.com/problems/reorder-list/",p:"Middle + reverse + merge / compare",id:"LC 143"},
+"Partition List":{u:"https://leetcode.com/problems/partition-list/",p:"Relink / partition / rotate",id:"LC 86"},
+"Odd Even Linked List":{u:"https://leetcode.com/problems/odd-even-linked-list/",p:"Relink / partition / rotate",id:"LC 328"},
+"Rotate List":{u:"https://leetcode.com/problems/rotate-list/",p:"Relink / partition / rotate",id:"LC 61"},
+"Add Two Numbers":{u:"https://leetcode.com/problems/add-two-numbers/",p:"Digits as linked list (carry)",id:"LC 2"},
+"Add 1 to a Linked List Number (GFG)":{u:"https://www.google.com/search?q=geeksforgeeks+add+1+to+a+number+represented+as+linked+list",p:"Digits as linked list (carry)",id:"GFG"},
+"Sort List":{u:"https://leetcode.com/problems/sort-list/",p:"Divide & conquer on list",id:"LC 148"},
+"Copy List with Random Pointer":{u:"https://leetcode.com/problems/copy-list-with-random-pointer/",p:"Hard pointer manipulation",id:"LC 138"},
+"Flatten Multilevel Doubly Linked List":{u:"https://leetcode.com/problems/flatten-a-multilevel-doubly-linked-list/",p:"Hard pointer manipulation",id:"LC 430"},
+"Delete All Occurrences in DLL (GFG)":{u:"https://www.google.com/search?q=geeksforgeeks+delete+all+occurrences+of+a+given+key+in+a+doubly+linked+list",p:"Hard pointer manipulation",id:"GFG"},
+"Tower of Hanoi":{u:"https://www.google.com/search?q=geeksforgeeks+tower+of+hanoi",p:"Classic recursion",id:"GFG"},
+"Generate Parentheses":{u:"https://leetcode.com/problems/generate-parentheses/",p:"Build under a constraint",id:"LC 22"},
+"Letter Combinations of a Phone Number":{u:"https://leetcode.com/problems/letter-combinations-of-a-phone-number/",p:"Build under a constraint",id:"LC 17"},
+"Subsets":{u:"https://leetcode.com/problems/subsets/",p:"Subsets / combinations",id:"LC 78"},
+"Combination Sum":{u:"https://leetcode.com/problems/combination-sum/",p:"Subsets / combinations",id:"LC 39"},
+"Permutations":{u:"https://leetcode.com/problems/permutations/",p:"Permutations",id:"LC 46"},
+"Next Permutation":{u:"https://leetcode.com/problems/next-permutation/",p:"Permutations",id:"LC 31"},
+"Sudoku Solver":{u:"https://leetcode.com/problems/sudoku-solver/",p:"Constraint satisfaction on a board",id:"LC 37"},
+"N-Queens":{u:"https://leetcode.com/problems/n-queens/",p:"Constraint satisfaction on a board",id:"LC 51"},
+"Longest Substring Without Repeating Characters":{u:"https://leetcode.com/problems/longest-substring-without-repeating-characters/",p:"Variable window + set / map",id:"LC 3"},
+"Longest Repeating Character Replacement":{u:"https://leetcode.com/problems/longest-repeating-character-replacement/",p:"Variable window + max-frequency constraint",id:"LC 424"},
+"Minimum Window Substring":{u:"https://leetcode.com/problems/minimum-window-substring/",p:"Shrink-to-minimum cover window",id:"LC 76"},
+"Find All Anagrams in a String":{u:"https://leetcode.com/problems/find-all-anagrams-in-a-string/",p:"Fixed window + count comparison",id:"LC 438"},
+"Maximum Subarray":{u:"https://leetcode.com/problems/maximum-subarray/",p:"Kadane (DP, not a true window)",id:"LC 53"},
+"Sliding Window Maximum":{u:"https://leetcode.com/problems/sliding-window-maximum/",p:"Monotonic deque (sliding window max)",id:"LC 239"},
+"K Closest Points to Origin":{u:"https://leetcode.com/problems/k-closest-points-to-origin/",p:"Top K with a size-K heap",id:"LC 973"},
+"Kth Largest Element in an Array":{u:"https://leetcode.com/problems/kth-largest-element-in-an-array/",p:"Top K with a size-K heap",id:"LC 215"},
+"Top K Frequent Words":{u:"https://leetcode.com/problems/top-k-frequent-words/",p:"Top K with a size-K heap",id:"LC 692"},
+"Find K Closest Elements":{u:"https://leetcode.com/problems/find-k-closest-elements/",p:"Top K on sorted data",id:"LC 658"},
+"Task Scheduler":{u:"https://leetcode.com/problems/task-scheduler/",p:"Greedy scheduling + heap",id:"LC 621"},
+"Smallest Range Covering Elements from K Lists":{u:"https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/",p:"K-way merge with a heap",id:"LC 632"},
+"Inorder Traversal":{u:"https://leetcode.com/problems/binary-tree-inorder-traversal/",p:"DFS traversals",id:"LC 94"},
+"Preorder Traversal":{u:"https://leetcode.com/problems/binary-tree-preorder-traversal/",p:"DFS traversals",id:"LC 144"},
+"Postorder Traversal":{u:"https://leetcode.com/problems/binary-tree-postorder-traversal/",p:"DFS traversals",id:"LC 145"},
+"Construct Tree from Preorder and Inorder":{u:"https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/",p:"Build tree from traversals",id:"LC 105"},
+"Level Order Traversal":{u:"https://leetcode.com/problems/binary-tree-level-order-traversal/",p:"BFS level-order family",id:"LC 102"},
+"Zigzag Level Order":{u:"https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/",p:"BFS level-order family",id:"LC 103"},
+"Right Side View":{u:"https://leetcode.com/problems/binary-tree-right-side-view/",p:"BFS level-order family",id:"LC 199"},
+"Left View (GFG)":{u:"https://www.google.com/search?q=geeksforgeeks+left+view+of+binary+tree",p:"BFS level-order family",id:"GFG"},
+"Maximum Width of Binary Tree":{u:"https://leetcode.com/problems/maximum-width-of-binary-tree/",p:"BFS level-order family",id:"LC 662"},
+"Vertical Order (GFG)":{u:"https://www.google.com/search?q=geeksforgeeks+print+a+binary+tree+in+vertical+order",p:"Horizontal distance",id:"GFG"},
+"Vertical Order Traversal LC 987":{u:"https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/",p:"Horizontal distance",id:"LC 987"},
+"Top View":{u:"https://www.google.com/search?q=geeksforgeeks+top+view+of+binary+tree",p:"Horizontal distance",id:"GFG"},
+"Bottom View":{u:"https://www.google.com/search?q=geeksforgeeks+bottom+view+of+binary+tree",p:"Horizontal distance",id:"GFG"},
+"Invert Binary Tree":{u:"https://leetcode.com/problems/invert-binary-tree/",p:"Mirror / compare structure",id:"LC 226"},
+"Same Tree":{u:"https://leetcode.com/problems/same-tree/",p:"Mirror / compare structure",id:"LC 100"},
+"Symmetric Tree":{u:"https://leetcode.com/problems/symmetric-tree/",p:"Mirror / compare structure",id:"LC 101"},
+"Subtree of Another Tree":{u:"https://leetcode.com/problems/subtree-of-another-tree/",p:"Mirror / compare structure",id:"LC 572"},
+"Maximum Depth":{u:"https://leetcode.com/problems/maximum-depth-of-binary-tree/",p:"Height-based post-order DFS",id:"LC 104"},
+"Balanced Binary Tree":{u:"https://leetcode.com/problems/balanced-binary-tree/",p:"Height-based post-order DFS",id:"LC 110"},
+"Diameter of Binary Tree":{u:"https://leetcode.com/problems/diameter-of-binary-tree/",p:"Height-based post-order DFS",id:"LC 543"},
+"Path Sum II":{u:"https://leetcode.com/problems/path-sum-ii/",p:"Path sum / path DP",id:"LC 113"},
+"Path Sum III":{u:"https://leetcode.com/problems/path-sum-iii/",p:"Path sum / path DP",id:"LC 437"},
+"Binary Tree Maximum Path Sum":{u:"https://leetcode.com/problems/binary-tree-maximum-path-sum/",p:"Path sum / path DP",id:"LC 124"},
+"LCA of a Binary Tree":{u:"https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/",p:"LCA / distance with parent links",id:"LC 236"},
+"All Nodes Distance K":{u:"https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree/",p:"LCA / distance with parent links",id:"LC 863"},
+"LCA of a BST":{u:"https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/",p:"Walk down using BST ordering",id:"LC 235"},
+"Inorder Successor in BST":{u:"https://leetcode.com/problems/inorder-successor-in-bst/",p:"Walk down using BST ordering",id:"LC 285"},
+"Kth Smallest Element in a BST":{u:"https://leetcode.com/problems/kth-smallest-element-in-a-bst/",p:"Inorder = sorted order",id:"LC 230"},
+"Validate BST":{u:"https://leetcode.com/problems/validate-binary-search-tree/",p:"Validate with range bounds",id:"LC 98"},
+"Convert Sorted Array to BST":{u:"https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/",p:"Construct a balanced BST",id:"LC 108"},
+"Insert Delete GetRandom O(1)":{u:"https://leetcode.com/problems/insert-delete-getrandom-o1/",p:"Hash map + array (O(1) random access)",id:"LC 380"},
+"LRU Cache":{u:"https://leetcode.com/problems/lru-cache/",p:"Hash map + doubly linked list (cache)",id:"LC 146"},
+"Min Stack":{u:"https://leetcode.com/problems/min-stack/",p:"Stack with extra state",id:"LC 155"},
+"Maximum Frequency Stack":{u:"https://leetcode.com/problems/maximum-frequency-stack/",p:"Stack with extra state",id:"LC 895"},
+"Implement Queue using Stacks":{u:"https://leetcode.com/problems/implement-queue-using-stacks/",p:"Stack ↔ queue adapters",id:"LC 232"},
+"Implement Stack using Queues":{u:"https://leetcode.com/problems/implement-stack-using-queues/",p:"Stack ↔ queue adapters",id:"LC 225"},
+"Design Circular Queue":{u:"https://leetcode.com/problems/design-circular-queue/",p:"Circular buffer / queue + timestamps",id:"LC 622"},
+"Design Hit Counter":{u:"https://leetcode.com/problems/design-hit-counter/",p:"Circular buffer / queue + timestamps",id:"LC 362"},
+"Largest Number":{u:"https://leetcode.com/problems/largest-number/",p:"Custom sort comparator",id:"LC 179"},
+"Gas Station":{u:"https://leetcode.com/problems/gas-station/",p:"Circular / local choice",id:"LC 134"},
+"Merge Intervals":{u:"https://leetcode.com/problems/merge-intervals/",p:"Sort intervals + linear scan",id:"LC 56"},
+"Meeting Rooms":{u:"https://leetcode.com/problems/meeting-rooms/",p:"Sort intervals + linear scan",id:"LC 252"},
+"Meeting Rooms II":{u:"https://leetcode.com/problems/meeting-rooms-ii/",p:"Intervals + heap / sweep",id:"LC 253"},
+"Counting Bits":{u:"https://leetcode.com/problems/counting-bits/",p:"DP on bits",id:"LC 338"},
+"Number of 1 Bits":{u:"https://leetcode.com/problems/number-of-1-bits/",p:"Bit count / clear lowest set bit",id:"LC 191"},
+"Single Number":{u:"https://leetcode.com/problems/single-number/",p:"XOR tricks",id:"LC 136"},
+"Reverse Bits":{u:"https://leetcode.com/problems/reverse-bits/",p:"Bit shifting / reversal",id:"LC 190"},
+"Add Binary":{u:"https://leetcode.com/problems/add-binary/",p:"Binary addition simulation",id:"LC 67"},
+"Flood Fill":{u:"https://leetcode.com/problems/flood-fill/",p:"Grid DFS / flood fill",id:"LC 733"},
+"Number of Islands":{u:"https://leetcode.com/problems/number-of-islands/",p:"Grid DFS / flood fill",id:"LC 200"},
+"Pacific Atlantic Water Flow":{u:"https://leetcode.com/problems/pacific-atlantic-water-flow/",p:"Grid DFS / flood fill",id:"LC 417"},
+"01 Matrix":{u:"https://leetcode.com/problems/01-matrix/",p:"Multi-source BFS",id:"LC 542"},
+"Rotting Oranges":{u:"https://leetcode.com/problems/rotting-oranges/",p:"Multi-source BFS",id:"LC 994"},
+"Shortest Path to Get Food":{u:"https://leetcode.com/problems/shortest-path-to-get-food/",p:"BFS shortest path on grid",id:"LC 1730"},
+"Minimum Knight Moves":{u:"https://leetcode.com/problems/minimum-knight-moves/",p:"BFS shortest path on grid",id:"LC 1197"},
+"Word Ladder":{u:"https://leetcode.com/problems/word-ladder/",p:"BFS shortest path on grid",id:"LC 127"},
+"Bus Routes":{u:"https://leetcode.com/problems/bus-routes/",p:"BFS shortest path on grid",id:"LC 815"},
+"Clone Graph":{u:"https://leetcode.com/problems/clone-graph/",p:"Graph clone",id:"LC 133"},
+"Word Search":{u:"https://leetcode.com/problems/word-search/",p:"Backtracking DFS on grid",id:"LC 79"},
+"Word Search II":{u:"https://leetcode.com/problems/word-search-ii/",p:"Backtracking DFS on grid",id:"LC 212"},
+"Topological Sort (GFG)":{u:"https://www.google.com/search?q=geeksforgeeks+topological+sort",p:"Topological sort / cycle detection",id:"GFG"},
+"Course Schedule":{u:"https://leetcode.com/problems/course-schedule/",p:"Topological sort / cycle detection",id:"LC 207"},
+"Course Schedule II":{u:"https://leetcode.com/problems/course-schedule-ii/",p:"Topological sort / cycle detection",id:"LC 210"},
+"Prerequisite Tasks (GFG)":{u:"https://www.google.com/search?q=geeksforgeeks+prerequisite+tasks",p:"Topological sort / cycle detection",id:"GFG"},
+"Alien Dictionary (GFG)":{u:"https://www.google.com/search?q=geeksforgeeks+alien+dictionary",p:"Topological sort / cycle detection",id:"GFG"},
+"Number of Provinces":{u:"https://leetcode.com/problems/number-of-provinces/",p:"Undirected components / Union-Find",id:"LC 547"},
+"Connected Components (GFG)":{u:"https://www.google.com/search?q=geeksforgeeks+connected+components+in+an+undirected+graph",p:"Undirected components / Union-Find",id:"GFG"},
+"Number of Connected Components (LC 323)":{u:"https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/",p:"Undirected components / Union-Find",id:"LC 323"},
+"Accounts Merge":{u:"https://leetcode.com/problems/accounts-merge/",p:"Undirected components / Union-Find",id:"LC 721"},
+"Graph Valid Tree":{u:"https://leetcode.com/problems/graph-valid-tree/",p:"Undirected components / Union-Find",id:"LC 261"},
+"Cheapest Flights Within K Stops":{u:"https://leetcode.com/problems/cheapest-flights-within-k-stops/",p:"Weighted shortest path with constraint",id:"LC 787"},
+"Longest Increasing Path in a Matrix":{u:"https://leetcode.com/problems/longest-increasing-path-in-a-matrix/",p:"DFS + memo on grid",id:"LC 329"},
+"Minimum Height Trees":{u:"https://leetcode.com/problems/minimum-height-trees/",p:"Tree as graph (leaf peeling)",id:"LC 310"},
+"Combination Sum IV":{u:"https://leetcode.com/problems/combination-sum-iv/",p:"Unbounded knapsack",id:"LC 377"},
+"Climbing Stairs":{u:"https://leetcode.com/problems/climbing-stairs/",p:"1D linear DP",id:"LC 70"},
+"House Robber":{u:"https://leetcode.com/problems/house-robber/",p:"1D linear DP",id:"LC 198"},
+"Decode Ways":{u:"https://leetcode.com/problems/decode-ways/",p:"1D linear DP",id:"LC 91"},
+"Maximum Product Subarray":{u:"https://leetcode.com/problems/maximum-product-subarray/",p:"Track both max and min state",id:"LC 152"},
+"Jump Game":{u:"https://leetcode.com/problems/jump-game/",p:"Reachability (greedy or DP)",id:"LC 55"},
+"Unique Paths":{u:"https://leetcode.com/problems/unique-paths/",p:"Grid paths",id:"LC 62"},
+"Maximal Square":{u:"https://leetcode.com/problems/maximal-square/",p:"2D square / submatrix DP",id:"LC 221"},
+"Count Square Submatrices":{u:"https://leetcode.com/problems/count-square-submatrices-with-all-ones/",p:"2D square / submatrix DP",id:"LC 1277"},
+"Coin Change":{u:"https://leetcode.com/problems/coin-change/",p:"Unbounded knapsack",id:"LC 322"},
+"Subset Sum (GFG)":{u:"https://www.google.com/search?q=geeksforgeeks+subset+sum+problem",p:"0/1 knapsack / subset sum",id:"GFG"},
+"Partition Equal Subset Sum":{u:"https://leetcode.com/problems/partition-equal-subset-sum/",p:"0/1 knapsack / subset sum",id:"LC 416"},
+"Longest Increasing Subsequence":{u:"https://leetcode.com/problems/longest-increasing-subsequence/",p:"Longest Increasing Subsequence (LIS)",id:"LC 300"},
+"Quick Sort":{u:"https://www.google.com/search?q=geeksforgeeks+quick+sort",p:"Sorting",id:"GFG"},
+"Sieve of Eratosthenes":{u:"https://www.google.com/search?q=geeksforgeeks+sieve+of+eratosthenes",p:"Number theory",id:"GFG"},
+"Kadane":{u:"https://www.google.com/search?q=geeksforgeeks+kadane+algorithm",p:"Array classics",id:"GFG"},
+"Moore Voting":{u:"https://www.google.com/search?q=geeksforgeeks+moore+voting+algorithm",p:"Array classics",id:"GFG"},
+"Kruskal":{u:"https://www.google.com/search?q=geeksforgeeks+kruskal+algorithm",p:"Minimum spanning tree",id:"GFG"},
+"Prim":{u:"https://www.google.com/search?q=geeksforgeeks+prim+algorithm",p:"Minimum spanning tree",id:"GFG"},
+"Dijkstra":{u:"https://www.google.com/search?q=geeksforgeeks+dijkstra+algorithm",p:"Shortest paths",id:"GFG"},
+"Bellman-Ford":{u:"https://www.google.com/search?q=geeksforgeeks+bellman+ford+algorithm",p:"Shortest paths",id:"GFG"},
+"Floyd Warshall":{u:"https://www.google.com/search?q=geeksforgeeks+floyd+warshall+algorithm",p:"Shortest paths",id:"GFG"},
+"Floyd Cycle Detection":{u:"https://www.google.com/search?q=geeksforgeeks+floyd+cycle+detection",p:"Cycle detection (linked list)",id:"GFG"},
+"Kahn":{u:"https://www.google.com/search?q=geeksforgeeks+kahn+algorithm+topological+sort",p:"Graph topo order / SCC",id:"GFG"},
+"Kosaraju":{u:"https://www.google.com/search?q=geeksforgeeks+kosaraju+algorithm",p:"Graph topo order / SCC",id:"GFG"},
+"Rabin-Karp":{u:"https://www.google.com/search?q=geeksforgeeks+rabin+karp+algorithm",p:"String matching",id:"GFG"},
+"KMP":{u:"https://www.google.com/search?q=geeksforgeeks+kmp+algorithm",p:"String matching",id:"GFG"},
+"B-Tree":{u:"https://www.google.com/search?q=geeksforgeeks+b+tree",p:"Balanced / multiway trees",id:"GFG"},
+"B+ Tree":{u:"https://www.google.com/search?q=geeksforgeeks+b+plus+tree",p:"Balanced / multiway trees",id:"GFG"},
+"AVL Tree":{u:"https://www.google.com/search?q=geeksforgeeks+avl+tree",p:"Balanced / multiway trees",id:"GFG"},
+"Red-Black Tree":{u:"https://www.google.com/search?q=geeksforgeeks+red+black+tree",p:"Balanced / multiway trees",id:"GFG"},
+"Two-Letter Card Game":{u:"https://www.google.com/search?q=two+letter+card+game+dsa",p:"Misc game theory",id:"Misc"},
+"Roman to Integer":{u:"https://leetcode.com/problems/roman-to-integer/",p:"Parse / map rules",id:"LC 13"},
+"Random Pick with Weight":{u:"https://leetcode.com/problems/random-pick-with-weight/",p:"Prefix sum + binary search",id:"LC 528"},
+"Pow(x, n)":{u:"https://leetcode.com/problems/powx-n/",p:"Fast exponentiation",id:"LC 50"},
+"Reverse Integer":{u:"https://leetcode.com/problems/reverse-integer/",p:"Digit extraction / overflow",id:"LC 7"},
+"Palindrome Number":{u:"https://leetcode.com/problems/palindrome-number/",p:"Digit extraction / overflow",id:"LC 9"},
+"Count Primes":{u:"https://leetcode.com/problems/count-primes/",p:"Sieve of Eratosthenes",id:"LC 204"},
+"Replace Words":{u:"https://leetcode.com/problems/replace-words/",p:"Shortest prefix / prefix aggregate",id:"LC 648"},
+"Word Search II (Trie version)":{u:"https://leetcode.com/problems/word-search-ii/",p:"Trie + grid backtracking",id:"LC 212"},
+"Word Break":{u:"https://leetcode.com/problems/word-break/",p:"Segmentation (DP; Trie optional)",id:"LC 139"},
+"Find Median from Data Stream":{u:"https://leetcode.com/problems/find-median-from-data-stream/",p:"Two heaps (median of stream)",id:"LC 295"},
+"Implement Trie":{u:"https://leetcode.com/problems/implement-trie-prefix-tree/",p:"Trie-based design",id:"LC 208"},
+"Implement Trie II":{u:"https://leetcode.com/problems/implement-trie-ii-prefix-tree/",p:"Trie-based design",id:"LC 1804"},
+"Map Sum Pairs":{u:"https://leetcode.com/problems/map-sum-pairs/",p:"Trie-based design",id:"LC 677"},
+"Design Add and Search Words":{u:"https://leetcode.com/problems/design-add-and-search-words-data-structure/",p:"Trie-based design",id:"LC 211"},
+"Design In-Memory File System":{u:"https://leetcode.com/problems/design-in-memory-file-system/",p:"Path tree design (file system)",id:"LC 588"},
+"Time Based Key-Value Store":{u:"https://leetcode.com/problems/time-based-key-value-store/",p:"Binary search + map (time-versioned store)",id:"LC 981"},
+"Serialize and Deserialize Binary Tree":{u:"https://leetcode.com/problems/serialize-and-deserialize-binary-tree/",p:"Serialize / deserialize",id:"LC 297"}
+};
+
 const WD=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 let S={};try{S=JSON.parse(localStorage.getItem("nov26")||"{}")}catch(e){}
 const save=()=>{try{localStorage.setItem("nov26",JSON.stringify(S))}catch(e){}};
@@ -113,12 +352,28 @@ function render(){
  document.getElementById("dn").textContent=D.filter((_,d)=>done(d)===P[d].length).length+" of 30 days complete";
  detail();
 }
-function row(key,text,flag){
+function row(key,text,flag,meta){
  const l=el("label","it"+(S[key]?" done":"")),c=el("input");c.type="checkbox";c.checked=!!S[key];
- const s=el("span","",text);
- if(flag){s.appendChild(el("span","tag"+(flag==="revisit"?" r":""),flag))}
- c.onchange=()=>{S[key]=c.checked;save();render()};
- l.appendChild(c);l.appendChild(s);return l;
+ c.onchange=(e)=>{e.stopPropagation();S[key]=c.checked;save();render()};
+ l.appendChild(c);
+ 
+ if(meta && meta.u){
+  const a=document.createElement("a");
+  a.className="link-wrap";
+  a.href=meta.u;
+  a.target="_blank";
+  a.rel="noopener noreferrer";
+  a.onclick=(e)=>e.stopPropagation();
+  a.appendChild(el("span","",text));
+  if(meta.id){a.appendChild(el("span","tag lc",meta.id))}
+  if(flag){a.appendChild(el("span","tag"+(flag==="revisit"?" r":""),flag))}
+  l.appendChild(a);
+ } else {
+  const s=el("span","text-wrap",text);
+  if(flag){s.appendChild(el("span","tag"+(flag==="revisit"?" r":""),flag))}
+  l.appendChild(s);
+ }
+ return l;
 }
 function detail(){
  const d=sel-1;det.textContent="";
@@ -127,10 +382,29 @@ function detail(){
  const ct=el("span","ct",done(d)+" / "+P[d].length);h.appendChild(ct);
  det.appendChild(el("h3","","Contests and tasks"));
  T[d].forEach((t,i)=>det.appendChild(row("t"+d+"_"+i,t)));
- det.appendChild(el("h3","","DSA problems (revisit items first)"));
- const ps=P[d].map((p,i)=>({p,i,f:p.endsWith("†")?"revisit":p.endsWith("✓")?"recap":""}));
- ps.sort((a,b)=>(b.f==="revisit")-(a.f==="revisit"));
- ps.forEach(o=>det.appendChild(row("p"+d+"_"+o.i,o.p.replace(/[†✓]$/,""),o.f)));
+ 
+ det.appendChild(el("h3","","DSA problems (pattern-wise & clickable)"));
+ const ps=P[d].map((p,i)=>{
+  const clean=p.replace(/[†✓]$/,"");
+  const m=META[clean]||{};
+  return {raw:p,clean,i,f:p.endsWith("†")?"revisit":p.endsWith("✓")?"recap":"",m};
+ });
+ 
+ const byPattern={};
+ ps.forEach(o=>{
+  const pat=o.m.p||"General / Mixed";
+  if(!byPattern[pat])byPattern[pat]=[];
+  byPattern[pat].push(o);
+ });
+ 
+ Object.keys(byPattern).forEach(pat=>{
+  const pdiv=el("div","pat-hdr");
+  pdiv.appendChild(el("span","",pat));
+  det.appendChild(pdiv);
+  byPattern[pat].forEach(o=>{
+   det.appendChild(row("p"+d+"_"+o.i,o.clean,o.f,o.m));
+  });
+ });
 }
 render();
 </script></body></html>
